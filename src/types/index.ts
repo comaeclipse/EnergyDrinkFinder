@@ -16,6 +16,11 @@ export interface EnergyDrink {
   flavor: string;
   size_ml: number;
   caffeine_mg?: number;
+  barcode?: string;
+  sugar_g?: number;
+  calories?: number;
+  description?: string;
+  image_url?: string;
 }
 
 export interface StoreInventory {
@@ -37,4 +42,25 @@ export interface SearchParams {
 export interface SearchResult extends Store {
   distance_km: number;
   available_drinks: Array<EnergyDrink & { price: number; in_stock: boolean }>;
+}
+
+export interface ScanRequest {
+  barcode: string;
+  store_id?: number;
+  latitude?: number;
+  longitude?: number;
+  price?: number;
+  in_stock?: boolean;
+}
+
+export interface ScanResponse {
+  success: boolean;
+  message: string;
+  data?: {
+    drink: EnergyDrink;
+    store: Store;
+    inventory: StoreInventory;
+    was_created: boolean;
+  };
+  error?: string;
 }
