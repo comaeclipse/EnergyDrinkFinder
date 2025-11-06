@@ -1,0 +1,157 @@
+[
+  {
+    "brand": "Red Bull",
+    "flavor": "Original",
+    "upc": "611269818994"
+  },
+  {
+    "brand": "Monster",
+    "flavor": "Original (Green)",
+    "upc": "070847815037"
+  },
+  {
+    "brand": "Monster",
+    "flavor": "Zero Sugar (Original)",
+    "upc": "0007084700003"
+  },
+  {
+    "brand": "Monster",
+    "flavor": "Zero Ultra",
+    "upc": "070847012474"
+  },
+  {
+    "brand": "Monster",
+    "flavor": "Ultra Watermelon",
+    "upc": "070847037996"
+  },
+  {
+    "brand": "Monster",
+    "flavor": "Ultra Paradise",
+    "upc": "070847033080"
+  },
+  {
+    "brand": "Monster",
+    "flavor": "Ultra Violet",
+    "upc": "070847027324"
+  },
+  {
+    "brand": "Monster",
+    "flavor": "Ultra Gold",
+    "upc": "070847037804"
+  },
+  {
+    "brand": "Rockstar",
+    "flavor": "Original",
+    "upc": "00818094005777"
+  },
+  {
+    "brand": "Celsius",
+    "flavor": "Sparkling Wild Berry",
+    "upc": "889392000320"
+  },
+  {
+    "brand": "Bang",
+    "flavor": "Blue Razz",
+    "upc": "610764863638"
+  },
+  {
+    "brand": "Reign",
+    "flavor": "White Haze",
+    "upc": "00815154026789"
+  },
+  {
+    "brand": "Reign",
+    "flavor": "Razzle Berry",
+    "upc": "815154021678"
+  },
+  {
+    "brand": "Reign",
+    "flavor": "Orange Dreamsicle",
+    "upc": "0081515402190"
+  },
+  {
+    "brand": "Reign",
+    "flavor": "Melon Mania",
+    "upc": "00815154021647"
+  },
+  {
+    "brand": "Reign",
+    "flavor": "Cherry Limeade",
+    "upc": "0081515402340"
+  },
+  {
+    "brand": "Reign",
+    "flavor": "Lilikoi Lychee",
+    "upc": "0081515402300"
+  },
+  {
+    "brand": "Reign",
+    "flavor": "Tropical Storm",
+    "upc": "0081515402482"
+  },
+  {
+    "brand": "Reign",
+    "flavor": "Tropical Storm (12oz)",
+    "upc": "0081515402671"
+  },
+  {
+    "brand": "Reign",
+    "flavor": "White Gummy Bear",
+    "upc": "0081515402326"
+  },
+  {
+    "brand": "Reign",
+    "flavor": "White Gummy Bear (12-pack)",
+    "upc": "815154023269"
+  },
+  {
+    "brand": "Reign",
+    "flavor": "Storm Valencia Orange",
+    "upc": "0081515402545"
+  },
+  {
+    "brand": "Reign",
+    "flavor": "Storm Valencia Orange (12-pack)",
+    "upc": "815154025454"
+  },
+  {
+    "brand": "Reign",
+    "flavor": "Storm Kiwi Blend",
+    "upc": null
+  },
+  {
+    "brand": "Reign",
+    "flavor": "Storm Harvest Grape",
+    "upc": null
+  },
+  {
+    "brand": "Reign",
+    "flavor": "Storm Guava Strawberry",
+    "upc": null
+  },
+  {
+    "brand": "Reign",
+    "flavor": "Storm Citrus Zest",
+    "upc": null
+  },
+  {
+    "brand": "Alani Nu",
+    "flavor": "Cherry Slush",
+    "upc": null
+  },
+  {
+    "brand": "NOS",
+    "flavor": "Original",
+    "upc": null
+  },
+  {
+    "brand": "Ghost",
+    "flavor": "Sour Patch Kids",
+    "upc": null
+  },
+  {
+    "brand": "BeGOAT",
+    "flavor": "Original",
+    "upc": null
+  }
+]
