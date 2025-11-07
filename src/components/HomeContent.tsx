@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
 import DrinkSearch from '@/components/DrinkSearch';
 import { Zap } from 'lucide-react';
@@ -15,6 +16,29 @@ const MapView = dynamic(() => import('@/components/MapView'), {
 });
 
 export default function HomeContent() {
+  const [stats, setStats] = useState({ stores: 0, drinks: 0 });
+
+  useEffect(() => {
+    // Fetch store count
+    fetch('/api/stores/all')
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.success && data.data?.stores) {
+          setStats((prev) => ({ ...prev, stores: data.data.stores.length }));
+        }
+      })
+      .catch((err) => console.error('Error fetching stores:', err));
+
+    // Fetch drink count
+    fetch('/api/drinks/autocomplete?q=')
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.success && data.data?.drinks) {
+          setStats((prev) => ({ ...prev, drinks: data.data.drinks.length }));
+        }
+      })
+      .catch((err) => console.error('Error fetching drinks:', err));
+  }, []);
   return (
     <>
       {/* Header */}
@@ -50,11 +74,15 @@ export default function HomeContent() {
             {/* Info Cards */}
             <div className="grid grid-cols-2 gap-4 mt-4">
               <div className="p-4 bg-gradient-to-br from-purple-900/30 to-black/30 border border-purple-500/20 rounded-lg backdrop-blur-sm">
-                <div className="text-2xl font-bold text-purple-400">50+</div>
+                <div className="text-2xl font-bold text-purple-400">
+                  {stats.drinks > 0 ? stats.drinks : '...'}
+                </div>
                 <div className="text-sm text-zinc-400">Energy Drinks</div>
               </div>
               <div className="p-4 bg-gradient-to-br from-purple-900/30 to-black/30 border border-purple-500/20 rounded-lg backdrop-blur-sm">
-                <div className="text-2xl font-bold text-purple-400">100+</div>
+                <div className="text-2xl font-bold text-purple-400">
+                  {stats.stores > 0 ? stats.stores : '...'}
+                </div>
                 <div className="text-sm text-zinc-400">Locations</div>
               </div>
             </div>
