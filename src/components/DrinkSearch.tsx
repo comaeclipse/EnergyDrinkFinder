@@ -34,7 +34,7 @@ export default function DrinkSearch() {
       try {
         const response = await fetch(`/api/drinks/autocomplete?q=${encodeURIComponent(query)}`);
         const data = await response.json();
-        setDrinks(data.drinks || []);
+        setDrinks(data.data?.drinks || []);
       } catch (error) {
         console.error('Error fetching drinks:', error);
         setDrinks([]);
