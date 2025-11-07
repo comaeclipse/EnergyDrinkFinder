@@ -10,8 +10,17 @@ interface MapViewProps {
   longitude?: number;
 }
 
-export default function MapView({ latitude = 37.7749, longitude = -122.4194 }: MapViewProps) {
-  const [location, setLocation] = useState({ lat: latitude, lng: longitude });
+// Pensacola, FL default coordinates
+const PENSACOLA_LAT = 30.4213;
+const PENSACOLA_LNG = -87.2169;
+
+export default function MapView({ latitude = PENSACOLA_LAT, longitude = PENSACOLA_LNG }: MapViewProps) {
+  const [viewState, setViewState] = useState({
+    latitude: latitude,
+    longitude: longitude,
+    zoom: 10, // Zoomed out to show broader Pensacola area
+  });
+  const [userLocation, setUserLocation] = useState<{ lat: number; lng: number } | null>(null);
   const [stores, setStores] = useState<Store[]>([]);
   const [selectedStore, setSelectedStore] = useState<Store | null>(null);
   const [loading, setLoading] = useState(true);
@@ -21,13 +30,22 @@ export default function MapView({ latitude = 37.7749, longitude = -122.4194 }: M
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
-          setLocation({
+          const newLocation = {
             lat: position.coords.latitude,
             lng: position.coords.longitude,
+          };
+          setUserLocation(newLocation);
+
+          // Update map view to center on user's location
+          setViewState({
+            latitude: newLocation.lat,
+            longitude: newLocation.lng,
+            zoom: 12, // Zoom in when we have actual user location
           });
         },
         (error) => {
           console.log('Geolocation error:', error);
+          // Keep default Pensacola location
         }
       );
     }
@@ -62,30 +80,29 @@ export default function MapView({ latitude = 37.7749, longitude = -122.4194 }: M
         </div>
       ) : (
         <Map
-          initialViewState={{
-            latitude: location.lat,
-            longitude: location.lng,
-            zoom: 12,
-          }}
+          {...viewState}
+          onMove={(evt) => setViewState(evt.viewState)}
           style={{ width: '100%', height: '100%' }}
           mapStyle="https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json"
         >
           {/* Navigation controls */}
           <NavigationControl position="top-right" />
 
-          {/* User location marker */}
-          <Marker
-            latitude={location.lat}
-            longitude={location.lng}
-            anchor="center"
-          >
-            <div className="relative">
-              <div className="absolute inset-0 bg-blue-500/30 rounded-full animate-ping" />
-              <div className="relative bg-blue-500 p-2 rounded-full border-4 border-white shadow-xl">
-                <div className="w-2 h-2" />
+          {/* User location marker - only show if we have user's location */}
+          {userLocation && (
+            <Marker
+              latitude={userLocation.lat}
+              longitude={userLocation.lng}
+              anchor="center"
+            >
+              <div className="relative">
+                <div className="absolute inset-0 bg-blue-500/30 rounded-full animate-ping" />
+                <div className="relative bg-blue-500 p-2 rounded-full border-4 border-white shadow-xl">
+                  <div className="w-2 h-2" />
+                </div>
               </div>
-            </div>
-          </Marker>
+            </Marker>
+          )}
 
           {/* Store markers */}
           {stores.map((store) => (
