@@ -1,0 +1,74 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model energy_drinks {
+  id              Int               @id @default(autoincrement())
+  brand           String            @db.VarChar(100)
+  flavor          String            @db.VarChar(100)
+  size_ml         Int
+  caffeine_mg     Int?
+  sugar_g         Decimal?          @db.Decimal(5, 2)
+  calories        Int?
+  description     String?
+  image_url       String?           @db.VarChar(500)
+  created_at      DateTime?         @default(now()) @db.Timestamptz(6)
+  barcode         String?           @unique @db.VarChar(20)
+  store_inventory store_inventory[]
+
+  @@unique([brand, flavor, size_ml])
+  @@index([barcode], map: "idx_drinks_barcode")
+  @@index([brand], map: "idx_drinks_brand")
+  @@index([flavor], map: "idx_drinks_flavor")
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model spatial_ref_sys {
+  srid      Int     @id
+  auth_name String? @db.VarChar(256)
+  auth_srid Int?
+  srtext    String? @db.VarChar(2048)
+  proj4text String? @db.VarChar(2048)
+}
+
+model store_inventory {
+  id            Int           @id @default(autoincrement())
+  store_id      Int
+  drink_id      Int
+  price         Decimal       @db.Decimal(6, 2)
+  in_stock      Boolean?      @default(true)
+  last_updated  DateTime?     @default(now()) @db.Timestamptz(6)
+  energy_drinks energy_drinks @relation(fields: [drink_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  stores        stores        @relation(fields: [store_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@unique([store_id, drink_id])
+  @@index([drink_id], map: "idx_inventory_drink")
+  @@index([in_stock], map: "idx_inventory_in_stock")
+  @@index([store_id], map: "idx_inventory_store")
+}
+
+model stores {
+  id              Int                       @id @default(autoincrement())
+  name            String                    @db.VarChar(255)
+  address         String                    @db.VarChar(500)
+  city            String                    @db.VarChar(100)
+  state           String                    @db.VarChar(2)
+  zip_code        String                    @db.VarChar(10)
+  latitude        Decimal                   @db.Decimal(10, 8)
+  longitude       Decimal                   @db.Decimal(11, 8)
+  phone           String?                   @db.VarChar(20)
+  hours_json      Json?
+  created_at      DateTime?                 @default(now()) @db.Timestamptz(6)
+  updated_at      DateTime?                 @default(now()) @db.Timestamptz(6)
+  location        Unsupported("geography")?
+  store_inventory store_inventory[]
+
+  @@index([city, state], map: "idx_stores_city_state")
+  @@index([location], map: "idx_stores_location", type: Gist)
+  @@index([zip_code], map: "idx_stores_zip")
+}
